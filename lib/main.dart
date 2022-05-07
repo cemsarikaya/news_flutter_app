@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_flutter_app/view/news_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,6 +16,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const Scaffold());
+        home: const NewsView());
   }
 }

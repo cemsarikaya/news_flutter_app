@@ -11,7 +11,13 @@ class _NewsViewState extends NewsViewModel {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(title: isLoading ? const CircularProgressIndicator() : null),
+      body: ListView.builder(
+        itemCount: resources.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Card(child: Text(resources[index].title ?? ''));
+        },
+      ),
     );
   }
 }
