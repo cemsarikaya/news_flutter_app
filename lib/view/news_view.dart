@@ -1,9 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:news_flutter_app/product/constant/padding_items.dart';
+import 'package:news_flutter_app/product/constant/project_items.dart';
 import 'package:news_flutter_app/product/service/project_dio.dart';
-import 'package:news_flutter_app/service/news_service.dart';
+import 'package:news_flutter_app/view/news_details_view.dart';
 import 'package:news_flutter_app/viewModel/news_provider.dart';
-import 'package:provider/provider.dart';
+import 'package:news_flutter_app/viewModel/news_viewmodel.dart';
+
+import '../product/constant/image_asset.dart';
+import '../product/constant/text_item.dart';
 
 class NewsView extends StatefulWidget {
   const NewsView({Key? key}) : super(key: key);
@@ -11,71 +16,55 @@ class NewsView extends StatefulWidget {
   State<NewsView> createState() => _NewsViewState();
 }
 
-class _NewsViewState extends State<NewsView> with ProjectDioMixin {
-  final _imagePath = 'assets/images/ss.png';
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class _NewsViewState extends NewsViewModel with ProjectDioMixin {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<NewsProvider>(
-      create: (context) => NewsProvider(NewsService(service)),
-      builder: (context, child) {
-        return Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: const Text('Haberler'),
-          ),
-          body: Padding(
-            padding: PaddindUtility().paddingOnly,
-            child: RefreshIndicator(
-              onRefresh: () async {
-                setState(() {
-                  context.read<NewsProvider>().fetch();
-                });
-              },
-              child: ListView.builder(
-                itemCount: context.watch<NewsProvider>().resources.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: Card(
-                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
-                      child: Column(children: [
-                        Padding(
-                          padding: PaddindUtility().paddingGeneral,
-                          child: Text(
-                            context.watch<NewsProvider>().resources[index].title ?? '',
-                          ),
-                        ),
-                        Padding(
-                          padding: PaddindUtility().paddingGeneral,
-                          child: CachedNetworkImage(
-                            imageUrl: context.watch<NewsProvider>().resources[index].urlToImage ?? '',
-                            fit: BoxFit.fill,
-                            placeholder: (context, url) => const CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => Image.asset(_imagePath),
-                          ),
-                        ),
-                      ]),
-                    ),
-                  );
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(ProjectItems.projectName),
+      ),
+      body: Padding(
+        padding: PaddindUtility().paddingOnly,
+        child: RefreshIndicator(
+          onRefresh: () async {
+            setState(() {
+              NewsProvider(newsService).fetch();
+            });
+          },
+          child: ListView.builder(
+            itemCount: resources.length,
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                onTap: () async {
+                  await Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => NewsDetailsView(path: [resources[index]])));
                 },
-              ),
-            ),
+                child: Card(
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+                  child: Column(children: [
+                    Padding(
+                      padding: PaddindUtility().paddingGeneral,
+                      child: Text(
+                        resources[index].title ?? '',
+                        style: kTitleText,
+                      ),
+                    ),
+                    Padding(
+                      padding: PaddindUtility().paddingGeneral,
+                      child: CachedNetworkImage(
+                        imageUrl: resources[index].urlToImage ?? '',
+                        fit: BoxFit.fill,
+                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Image.asset(imagePath),
+                      ),
+                    ),
+                  ]),
+                ),
+              );
+            },
           ),
-        );
-      },
+        ),
+      ),
     );
   }
-}
-
-class PaddindUtility {
-  final paddingTop = const EdgeInsets.only(top: 10);
-  final paddinBottom = const EdgeInsets.only(bottom: 20);
-  final paddingOnly = const EdgeInsets.only(left: 10, right: 10);
-  final paddingGeneral = const EdgeInsets.all(10);
-  final paddingHorizontal = const EdgeInsets.symmetric(horizontal: 20);
 }
