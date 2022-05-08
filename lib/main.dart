@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_flutter_app/product/constant/light_theme.dart';
 import 'package:news_flutter_app/view/news_view.dart';
 
 void main() {
@@ -12,10 +13,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const NewsView());
+        title: 'Haberler', theme: LighTheme().theme, debugShowCheckedModeBanner: false, home: const NewsView());
   }
 }
