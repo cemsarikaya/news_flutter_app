@@ -2,6 +2,11 @@
 
 A new Flutter project.
 
+# screen views
+
+<img src = "https://github.com/cemsarikaya/news_flutter_app/blob/master/assets/images/Screenshot_1652099613.png" width="250"> <img src = "https://github.com/cemsarikaya/news_flutter_app/blob/master/assets/images/Screenshot_1652099616.png" width="250">
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
