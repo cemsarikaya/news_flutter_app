@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'resource_model.g.dart';
+
+@JsonSerializable()
 class ResourceModel {
   ResourceModel({
     String? status,
@@ -9,15 +14,8 @@ class ResourceModel {
     _articles = articles;
   }
 
-  ResourceModel.fromJson(dynamic json) {
-    _status = json['status'];
-    _totalResults = json['totalResults'];
-    if (json['articles'] != null) {
-      _articles = [];
-      json['articles'].forEach((v) {
-        _articles?.add(Articles.fromJson(v));
-      });
-    }
+  factory ResourceModel.fromJson(dynamic json) {
+    return _$ResourceModelFromJson(json);
   }
   String? _status;
   int? _totalResults;
@@ -37,16 +35,11 @@ class ResourceModel {
   List<Articles>? get articles => _articles;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['status'] = _status;
-    map['totalResults'] = _totalResults;
-    if (_articles != null) {
-      map['articles'] = _articles?.map((v) => v.toJson()).toList();
-    }
-    return map;
+    return _$ResourceModelToJson(this);
   }
 }
 
+@JsonSerializable()
 class Articles {
   Articles({
     Source? source,
@@ -68,15 +61,8 @@ class Articles {
     _content = content;
   }
 
-  Articles.fromJson(dynamic json) {
-    _source = json['source'] != null ? Source.fromJson(json['source']) : null;
-    _author = json['author'];
-    _title = json['title'];
-    _description = json['description'];
-    _url = json['url'];
-    _urlToImage = json['urlToImage'];
-    _publishedAt = json['publishedAt'];
-    _content = json['content'];
+  factory Articles.fromJson(dynamic json) {
+    return _$ArticlesFromJson(json);
   }
   Source? _source;
   String? _author;
@@ -116,21 +102,11 @@ class Articles {
   String? get content => _content;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (_source != null) {
-      map['source'] = _source?.toJson();
-    }
-    map['author'] = _author;
-    map['title'] = _title;
-    map['description'] = _description;
-    map['url'] = _url;
-    map['urlToImage'] = _urlToImage;
-    map['publishedAt'] = _publishedAt;
-    map['content'] = _content;
-    return map;
+    return _$ArticlesToJson(this);
   }
 }
 
+@JsonSerializable()
 class Source {
   Source({
     dynamic id,
@@ -140,9 +116,8 @@ class Source {
     _name = name;
   }
 
-  Source.fromJson(dynamic json) {
-    _id = json['id'];
-    _name = json['name'];
+  factory Source.fromJson(dynamic json) {
+    return _$SourceFromJson(json);
   }
   dynamic _id;
   String? _name;
@@ -158,9 +133,6 @@ class Source {
   String? get name => _name;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = _id;
-    map['name'] = _name;
-    return map;
+    return _$SourceToJson(this);
   }
 }

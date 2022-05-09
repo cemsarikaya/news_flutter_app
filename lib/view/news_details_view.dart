@@ -4,8 +4,8 @@ import 'package:news_flutter_app/product/constant/image_asset.dart';
 import 'package:news_flutter_app/product/constant/padding_items.dart';
 import 'package:news_flutter_app/product/constant/project_items.dart';
 import 'package:news_flutter_app/product/constant/text_item.dart';
-
-import '../product/model/resource_model.dart';
+import '../model/resource_model.dart';
+import 'package:kartal/kartal.dart';
 
 class NewsDetailsView extends StatefulWidget {
   final List<Articles> path;
@@ -30,7 +30,13 @@ class _NewsDetailsViewState extends State<NewsDetailsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text(ProjectItems.projectName)),
+      appBar: AppBar(title: const Text(ProjectItems.projectName), actions: [
+        IconButton(
+            onPressed: () {
+              '${resources.first.url}'.shareWhatsApp();
+            },
+            icon: const Icon(Icons.share_rounded))
+      ]),
       body: Padding(
         padding: PaddindUtility().paddingOnly,
         child: ListView(children: [
@@ -59,7 +65,11 @@ class _NewsDetailsViewState extends State<NewsDetailsView> {
               ),
               Padding(
                 padding: PaddindUtility().paddingButton,
-                child: ElevatedButton(onPressed: () {}, child: const Text('Web Sitesinde Görüntüle')),
+                child: ElevatedButton(
+                    onPressed: () {
+                      '${resources.first.url}'.launchWebsite;
+                    },
+                    child: const Text('Web Sitesinde Görüntüle')),
               )
             ],
           )

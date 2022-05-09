@@ -4,7 +4,6 @@ import 'package:news_flutter_app/product/constant/padding_items.dart';
 import 'package:news_flutter_app/product/constant/project_items.dart';
 import 'package:news_flutter_app/product/service/project_dio.dart';
 import 'package:news_flutter_app/view/news_details_view.dart';
-import 'package:news_flutter_app/viewModel/news_provider.dart';
 import 'package:news_flutter_app/viewModel/news_viewmodel.dart';
 
 import '../product/constant/image_asset.dart';
@@ -26,11 +25,7 @@ class _NewsViewState extends NewsViewModel with ProjectDioMixin {
       body: Padding(
         padding: PaddindUtility().paddingOnly,
         child: RefreshIndicator(
-          onRefresh: () async {
-            setState(() {
-              NewsProvider(newsService).fetch();
-            });
-          },
+          onRefresh: fetch,
           child: ListView.builder(
             itemCount: resources.length,
             itemBuilder: (BuildContext context, int index) {

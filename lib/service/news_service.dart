@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:news_flutter_app/product/model/resource_model.dart';
+import 'package:news_flutter_app/api_key.dart';
+import 'package:news_flutter_app/model/resource_model.dart';
 
 abstract class INewsService {
   INewsService(this.dio);
@@ -18,8 +19,7 @@ class NewsService extends INewsService {
   @override
   Future<ResourceModel?> fetchResourceItem() async {
     //final response = await dio.get('/${_ReqRestPath.resource.name}}');
-    final response = await dio
-        .get('/top-headlines', queryParameters: {'country': 'tr', 'apiKey': '88625bd6bf7746c3a673085bcff3d90b'});
+    final response = await dio.get('/top-headlines', queryParameters: {'country': 'tr', 'apiKey': apiKey});
 
     if (response.statusCode == HttpStatus.ok) {
       final jsonBody = response.data;
