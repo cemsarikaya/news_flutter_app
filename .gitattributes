@@ -1,5 +1,2 @@
-*.c linguist-detectable=false
-*.Cmake linguist-detectable=false
-*.c++ linguist-detectable=false
-*.html linguist-detectable=false  
-*.dart linguist-detectable=true 
+# Direct Dart
+*.* linguist-language=Dart
